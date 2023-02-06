@@ -2,7 +2,7 @@ name: Hasura migration
 on:
   push:
     branches:
-      - production
+      - main
 jobs:
   deployment:
     environment: production
