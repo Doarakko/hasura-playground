@@ -4,7 +4,7 @@ services:
     image: postgres:15
     restart: always
     volumes:
-    - db_data:/var/lib/postgresql/data
+    - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
@@ -29,4 +29,4 @@ services:
       ## uncomment next line to set an admin secret
       # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
 volumes:
-  db_data:
+  db-data:
