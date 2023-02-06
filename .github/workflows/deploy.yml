@@ -1,4 +1,4 @@
-name: Hasura migration
+name: deploy
 on:
   push:
     branches:
@@ -11,9 +11,9 @@ jobs:
     environment: production
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: checkout repo
         uses: actions/checkout@v3
-      - name: Apply hasura migrations
+      - name: apply hasura migrations
         uses: tibotiber/hasura-action@v3.0
         with:
           args: migrate apply --all-databases
@@ -22,7 +22,25 @@ jobs:
           HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
           HASURA_WORKDIR: hasura
           HASURA_ENGINE_VERSION: v2.17.1
-      - name: apply metadata
+      - name: apply hasura seed
+        uses: tibotiber/hasura-action@v3.0
+        with:
+          args: seed apply --all-databases
+        env:
+          HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
+          HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
+          HASURA_WORKDIR: hasura
+          HASURA_ENGINE_VERSION: v2.17.1
+      - name: apply hasura seed
+        uses: tibotiber/hasura-action@v3.0
+        with:
+          args: metadata apply
+        env:
+          HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
+          HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
+          HASURA_WORKDIR: hasura
+          HASURA_ENGINE_VERSION: v2.17.1
+      - name: apply hasura metadata
         uses: tibotiber/hasura-action@v3.0
         with:
           args: metadata apply

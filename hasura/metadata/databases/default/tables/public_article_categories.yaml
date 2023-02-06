@@ -1,0 +1,3 @@
+table:
+  name: article_categories
+  schema: public
