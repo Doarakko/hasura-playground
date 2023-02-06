@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'hasura/**'
+      - 'hasura/*'
 
 jobs:
   deployment:
@@ -22,4 +22,12 @@ jobs:
           HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
           HASURA_WORKDIR: hasura
           HASURA_ENGINE_VERSION: v2.17.1
-
+      - name: apply metadata
+        uses: tibotiber/hasura-action@v3.0
+        with:
+          args: metadata apply
+        env:
+          HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
+          HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
+          HASURA_WORKDIR: hasura
+          HASURA_ENGINE_VERSION: v2.17.1
